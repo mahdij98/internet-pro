@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- دایره خاموش + آیکون روشن/خاموش به‌صورت یک لایه واحد (تضمین نمایش) -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <gradient android:type="radial" android:gradientRadius="60%p"
+                android:startColor="#F4696E" android:endColor="#B3272C" />
+        </shape>
+    </item>
+    <item
+        android:width="112dp"
+        android:height="112dp"
+        android:gravity="center"
+        android:drawable="@drawable/ic_power_app" />
+</layer-list>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>پیش‌نمایش اینترنت پرو</title>
+<style>
+  body{margin:0;background:#05080f;font-family:Tahoma,system-ui,sans-serif;display:flex;gap:28px;
+       align-items:center;justify-content:center;min-height:100vh;flex-wrap:wrap;padding:24px;box-sizing:border-box}
+  .phone{width:300px;height:610px;border-radius:38px;padding:14px;background:linear-gradient(160deg,#0b1220,#12203a);
+         box-shadow:0 0 0 2px #1c2a42,0 24px 60px rgba(0,0,0,.7);box-sizing:border-box;position:relative}
+  .screen{width:100%;height:100%;border-radius:28px;background:linear-gradient(180deg,#0b1220,#121f33);
+          display:flex;flex-direction:column;padding:18px 16px;box-sizing:border-box;color:#fff;overflow:hidden}
+  .head{display:flex;align-items:flex-start;justify-content:space-between;position:relative}
+  .head>div:first-child{text-align:center;width:100%}
+  .headRight{position:absolute;left:0;top:0}
+  .t1{font-size:19px;font-weight:bold}
+  .t2{font-size:11px;color:#93a5bd;margin-top:4px}
+  .gear{width:34px;height:34px;border-radius:50%;background:#16233a;display:grid;place-items:center;color:#93a5bd;font-size:15px}
+  .key{width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#6fb6ff,#1565d8);
+       border:1px solid #8cc6ff;display:grid;place-items:center;margin-left:9px;overflow:hidden}
+  .key svg{display:block}
+  /* آیکون پاور ریموت */
+  .btn svg{width:56px;height:56px;display:block}
+  .headRight{display:flex;align-items:center}
+  .mid{flex:1;display:flex;align-items:center;justify-content:center;position:relative}
+  .ring{position:absolute;width:186px;height:186px;border-radius:50%}
+  .btn{position:absolute;width:150px;height:150px;border-radius:50%;display:grid;place-items:center;font-size:52px}
+  .on .ring{background:rgba(22,179,100,.20)}
+  .on .btn{background:radial-gradient(circle at 35% 30%,#37d686,#0e8a4c);box-shadow:0 0 42px rgba(22,179,100,.55)}
+  .off .ring{background:rgba(229,72,77,.20)}
+  .off .btn{background:radial-gradient(circle at 35% 30%,#f2656a,#b3272c);box-shadow:0 0 42px rgba(229,72,77,.5)}
+  .state{text-align:center;font-size:24px;font-weight:bold;letter-spacing:.5px}
+  .on .state{color:#16b364}.off .state{color:#e5484d}
+  .work .state{color:#93a5bd;font-size:16px}
+  .hint{text-align:center;font-size:11px;color:#93a5bd;margin:8px 0 12px}
+  .card{background:#16233a;border:1px solid #23344f;border-radius:14px;padding:11px 13px}
+  .card b{font-size:10px;color:#6c7f98;font-weight:normal}
+  .card p{margin:6px 0 0;font-size:11px;color:#93a5bd}
+  .foot{text-align:center;font-size:9.5px;color:#6c7f98;margin-top:12px}
+  .label{color:#93a5bd;font-size:12px;text-align:center;margin-top:10px}
+  .pulse{animation:p 1.1s ease-in-out infinite alternate}
+  @keyframes p{from{opacity:.25}to{opacity:.85}}
+</style>
+</head>
+<body>
+
+<div>
+<div class="phone"><div class="screen off">
+  <div class="head"><div><div class="t1">اینترنت پرو</div><div class="t2">مدیریت سرویس اینترنت</div></div><div class="gear">⚙</div></div>
+  <div class="mid"><div class="ring"></div><div class="btn"><svg viewBox="0 0 24 24" width="62" height="62" fill="none" stroke="#fff" stroke-width="2.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6.4 5.6 12 18.4 17.6 5.6"/></svg></div></div>
+  <div class="state">خاموش</div>
+  <div class="hint">برای روشن کردن لمس کنید</div>
+  <div class="card"><b>پاسخ اپراتور</b><p>—</p></div>
+  <div class="foot">USSD: *10*327#</div>
+</div></div>
+<div class="label">حالت خاموش (همان آیکون V وسط دکمه)</div>
+</div>
+
+<div>
+<div class="phone"><div class="screen on">
+  <div class="head"><div><div class="t1">اینترنت پرو</div><div class="t2">مدیریت سرویس اینترنت</div></div><div class="headRight"><div class="gear">⚙</div></div></div>
+  <div class="mid"><div class="ring"></div><div class="btn"><svg viewBox="0 0 24 24" width="62" height="62" fill="none" stroke="#fff" stroke-width="2.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6.4 5.6 12 18.4 17.6 5.6"/></svg></div></div>
+  <div class="state">روشن</div>
+  <div class="hint">برای خاموش کردن لمس کنید</div>
+  <div class="card"><b>پاسخ اپراتور</b><p>سرویس اینترنت با موفقیت فعال شد.</p></div>
+  <div class="foot">USSD: *10*327#</div>
+</div></div>
+<div class="label">حالت روشن</div>
+</div>
+
+<div>
+<div class="phone"><div class="screen work off">
+  <div class="head"><div><div class="t1">اینترنت پرو</div><div class="t2">مدیریت سرویس اینترنت</div></div><div class="gear">⚙</div></div>
+  <div class="mid"><div class="ring pulse"></div><div class="btn"><svg viewBox="0 0 24 24" width="62" height="62" fill="none" stroke="#fff" stroke-width="2.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6.4 5.6 12 18.4 17.6 5.6"/></svg></div></div>
+  <div class="state">در حال ارتباط با اپراتور…</div>
+  <div class="hint">ارسال «۱» برای روشن کردن…</div>
+  <div class="card"><b>پاسخ اپراتور</b><p>در حال ارسال *10*327# …</p></div>
+  <div class="foot">USSD: *10*327#</div>
+</div></div>
+<div class="label">حالت در حال انجام</div>
+</div>
+
+</body>
+</html>

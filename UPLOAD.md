@@ -6,7 +6,7 @@
 cd internet-pro-repo
 git init -b main
 git add .
-git commit -m "Internet Pro 1.0 - 1.7 (APK + source)"
+git commit -m "Internet Pro 1.0 - 1.9 (APK + source + Bazaar package)"
 ```
 
 سپس روی گیت‌هاب یک مخزن خالی بسازید (مثلاً `internet-pro`, بدون README)، و:
@@ -26,7 +26,7 @@ git clone https://github.com/USERNAME/REPO.git
 cp -r internet-pro-repo/* REPO/
 cd REPO
 git add .
-git commit -m "Add Internet Pro APKs (1.0–1.7) and source"
+git commit -m "Add Internet Pro 1.9 APK, source, and Bazaar assets"
 git push
 ```
 
@@ -40,11 +40,11 @@ git push
 ## روش ۴: انتشار به‌عنوان Release (توصیه‌شده برای APK)
 
 ```bash
-gh release create v1.7 \
-  releases/InternetPro-1.7.apk \
+gh release create v1.9 \
+  releases/InternetPro-1.9.apk \
   releases/InternetPro-latest.apk \
-  --title "Internet Pro 1.7" \
-  --notes "آیکون پاور اپلیکیشن در مرکز دکمه"
+  --title "Internet Pro 1.9" \
+  --notes "بنر تپسل و بستهٔ آمادهٔ انتشار در کافه‌بازار"
 ```
 
 (نیازمند نصب [GitHub CLI](https://cli.github.com) و `gh auth login`)

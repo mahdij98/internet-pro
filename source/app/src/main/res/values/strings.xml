@@ -30,7 +30,7 @@
     <string name="accessibility_open">باز کردن تنظیمات دسترس‌پذیری</string>
     <string name="accessibility_label">اینترنت پرو – ارسال خودکار پاسخ USSD</string>
     <string name="about_section">درباره</string>
-    <string name="about_text">اینترنت پرو نسخه ۱.۰\nکد دستوری: *10*327#\nروشن کردن: ارسال خودکار «۱»\nخاموش کردن: ارسال خودکار «۲»\n\nوضعیت واقعی سرویس با پاسخ اپراتور مشخص می‌شود.</string>
+    <string name="about_text">اینترنت پرو نسخه ۱.۹\nکد دستوری: *10*327#\nروشن کردن: ارسال خودکار «۱»\nخاموش کردن: ارسال خودکار «۲»\n\nوضعیت واقعی سرویس با پاسخ اپراتور مشخص می‌شود.</string>
     <string name="close">بستن</string>
     <string name="error_no_permission">برای ارسال کد دستوری، دسترسی «تماس» لازم است.</string>
     <string name="error_no_sim">سیم‌کارت فعالی پیدا نشد.</string>

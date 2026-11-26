@@ -34,6 +34,10 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.Locale;
 
+import ir.tapsell.sdk.bannerads.TapsellBannerType;
+import ir.tapsell.sdk.bannerads.TapsellBannerView;
+import ir.tapsell.sdk.bannerads.TapsellBannerViewEventListener;
+
 /**
  * اینترنت پرو — یک دکمه گرد برای روشن/خاموش کردن سرویس اینترنت.
  *
@@ -57,6 +61,8 @@ public class MainActivity extends Activity {
     private TextView stateText;
     private TextView hintText;
     private TextView detailText;
+    private FrameLayout tapsellBannerHolder;
+    private TapsellBannerView tapsellBannerView;
 
     private boolean busy = false;
     private boolean targetOn = false;
@@ -70,6 +76,7 @@ public class MainActivity extends Activity {
         applyInsets(content);
         refreshUi();
         maybeAskNotificationPermission();
+        requestTapsellBanner();
     }
 
     @Override
@@ -259,6 +266,21 @@ public class MainActivity extends Activity {
         footer.setPadding(0, dp(12), 0, dp(2));
         root.addView(footer);
 
+        // Standard Tapsell banner, anchored below the USSD controls.
+        tapsellBannerHolder = new FrameLayout(this);
+        tapsellBannerHolder.setVisibility(View.GONE);
+        LinearLayout.LayoutParams bannerHolderLp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, dp(56));
+        bannerHolderLp.topMargin = dp(4);
+        bannerHolderLp.leftMargin = -dp(20);
+        bannerHolderLp.rightMargin = -dp(20);
+        root.addView(tapsellBannerHolder, bannerHolderLp);
+
+        tapsellBannerView = new TapsellBannerView(this, TapsellBannerType.BANNER_320x50,
+                BuildConfig.TAPSELL_ZONE_ID);
+        FrameLayout.LayoutParams bannerLp = new FrameLayout.LayoutParams(dp(320), dp(50), Gravity.CENTER);
+        tapsellBannerHolder.addView(tapsellBannerView, bannerLp);
+
         ScrollView sc = new ScrollView(this);
         sc.setFillViewport(true);
         sc.setBackgroundResource(R.drawable.bg_app);
@@ -266,6 +288,38 @@ public class MainActivity extends Activity {
         sc.addView(root, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return sc;
+    }
+
+    /** Load the standard 320x50 Tapsell banner using the configured legacy app key and zone ID. */
+    private void requestTapsellBanner() {
+        if (tapsellBannerView == null) return;
+        tapsellBannerView.setEventListener(new TapsellBannerViewEventListener() {
+            private void setBannerVisible(final boolean visible) {
+                runOnUiThread(new Runnable() {
+                    @Override public void run() {
+                        if (!isFinishing() && !isDestroyed() && tapsellBannerHolder != null) {
+                            tapsellBannerHolder.setVisibility(visible ? View.VISIBLE : View.GONE);
+                        }
+                    }
+                });
+            }
+            @Override public void onNoAdAvailable() { setBannerVisible(false); }
+            @Override public void onNoNetwork() { setBannerVisible(false); }
+            @Override public void onError(String message) { setBannerVisible(false); }
+            @Override public void onRequestFilled() { setBannerVisible(true); }
+            @Override public void onHideBannerView() { setBannerVisible(false); }
+            @Override public void onAdClicked() { }
+        });
+        tapsellBannerView.loadAd(this, BuildConfig.TAPSELL_ZONE_ID, TapsellBannerType.BANNER_320x50);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (tapsellBannerView != null) {
+            tapsellBannerView.destroy();
+            tapsellBannerView = null;
+        }
+        super.onDestroy();
     }
 
     private GradientDrawable makeCircle(int color) {

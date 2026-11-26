@@ -1,0 +1,66 @@
+plugins {
+    id 'com.android.application'
+}
+
+def tapsellAppKey = System.getenv('TAPSELL_APP_KEY') ?: 'MISSING_TAPSELL_APP_KEY'
+def tapsellZoneId = System.getenv('TAPSELL_ZONE_ID') ?: 'MISSING_TAPSELL_ZONE_ID'
+
+def q = { String value -> '"' + value.replace('\\', '\\\\').replace('"', '\\"') + '"' }
+
+android {
+    namespace 'ir.internetpro.app'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'ir.internetpro.app'
+        minSdk 26
+        targetSdk 35
+        versionCode 10
+        versionName '1.9'
+        buildConfigField 'String', 'TAPSELL_APP_KEY', q(tapsellAppKey)
+        buildConfigField 'String', 'TAPSELL_ZONE_ID', q(tapsellZoneId)
+    }
+
+    buildFeatures { buildConfig true }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    signingConfigs {
+        release {
+            def ks = System.getenv('INTERNETPRO_KEYSTORE')
+            if (ks) {
+                storeFile file(ks)
+                storePassword System.getenv('INTERNETPRO_STORE_PASSWORD')
+                keyAlias System.getenv('INTERNETPRO_KEY_ALIAS')
+                keyPassword System.getenv('INTERNETPRO_KEY_PASSWORD')
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            if (System.getenv('INTERNETPRO_KEYSTORE')) signingConfig signingConfigs.release
+        }
+    }
+}
+
+dependencies {
+    implementation 'ir.tapsell.sdk:tapsell-sdk-android:4.9.15'
+}
+
+tasks.register('verifyReleaseSecrets') {
+    doLast {
+        if (!System.getenv('TAPSELL_APP_KEY') || !System.getenv('TAPSELL_ZONE_ID')) {
+            throw new GradleException('Set TAPSELL_APP_KEY and TAPSELL_ZONE_ID before creating a release build.')
+        }
+        if (!System.getenv('INTERNETPRO_KEYSTORE') || !System.getenv('INTERNETPRO_STORE_PASSWORD') ||
+                !System.getenv('INTERNETPRO_KEY_ALIAS') || !System.getenv('INTERNETPRO_KEY_PASSWORD')) {
+            throw new GradleException('Set the INTERNETPRO_KEYSTORE and signing environment variables for a signed release.')
+        }
+    }
+}
+tasks.matching { it.name == 'preReleaseBuild' }.configureEach { dependsOn 'verifyReleaseSecrets' }
